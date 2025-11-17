@@ -1,0 +1,36 @@
+<svg version="1.1" id="Layer_1" xmlns:x="ns_extend;" xmlns:i="ns_ai;" xmlns:graph="ns_graphs;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 48 48" style="enable-background:new 0 0 48 48;" xml:space="preserve">
+ <style type="text/css">
+  .st0{fill:url(#SVGID_1_);}
+ </style>
+ <metadata>
+  <sfw xmlns="ns_sfw;">
+   <slices>
+   </slices>
+   <sliceSourceBounds bottomLeftOrigin="true" height="48" width="48" x="117.4" y="67.6">
+   </sliceSourceBounds>
+  </sfw>
+ </metadata>
+ <g>
+  <radialGradient id="SVGID_1_" cx="24" cy="161.1576" r="24" gradientTransform="matrix(1 0 0 -1 0 185.1576)" gradientUnits="userSpaceOnUse">
+   <stop offset="0" style="stop-color:#FFCB05">
+   </stop>
+   <stop offset="0.5" style="stop-color:#FFCB05">
+   </stop>
+   <stop offset="0.59" style="stop-color:#FFCB05;stop-opacity:0.78">
+   </stop>
+   <stop offset="0.7" style="stop-color:#FFCB05;stop-opacity:0.5">
+   </stop>
+   <stop offset="0.8" style="stop-color:#FFCB05;stop-opacity:0.29">
+   </stop>
+   <stop offset="0.89" style="stop-color:#FFCB05;stop-opacity:0.13">
+   </stop>
+   <stop offset="0.96" style="stop-color:#FFCB05;stop-opacity:4.000000e-02">
+   </stop>
+   <stop offset="1" style="stop-color:#FFCB05;stop-opacity:0">
+   </stop>
+  </radialGradient>
+  <path class="st0" d="M24,0C10.7,0,0,10.7,0,24s10.7,24,24,24s24-10.7,24-24S37.3,0,24,0z M24,36c-6.6,0-12-5.4-12-12s5.4-12,12-12
+		s12,5.4,12,12S30.6,36,24,36z">
+  </path>
+ </g>
+</svg>
