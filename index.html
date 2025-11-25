@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+<title>reGalaxy Real Estate — One Page</title>
+<link rel="icon" href="https://s3-ap-southeast-2.amazonaws.com/zenu/subzero/1498/favicon.ico" />
+<style>
+:root{
+  --bg:#f7f3ea; /* light linen */
+  --panel:#ffffff; /* clean card/panel */
+  --ink:#1f2a1f; /* deep forest text */
+  --muted:#5e6b5f; /* sage grey */
+  --brand:#2f6d3a; /* country green */
+  --brand2:#5fa55a; /* lighter green */
+  --accent:#b97a2e; /* bronze */
+  --line:rgba(0,0,0,.08); /* subtle divider on light */
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial; -webkit-font-smoothing: antialiased;}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+.container{max-width:1200px;margin:0 auto;padding:0 20px}
+.section{padding:72px 0; scroll-margin-top:80px}
+.subtle{color:var(--muted)}
+.hr{height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent);margin:20px 0}
+
+/* UI Elements */
+.badge{display:inline-block;background:rgba(47,109,58,.08);border:1px solid var(--line);color:#2f6d3a;padding:4px 8px;border-radius:999px;font-size:12px;transition:transform .18s ease, box-shadow .18s ease}
+.badge:hover{transform:translateY(-1px);box-shadow:0 6px 14px rgba(0,0,0,.08)}
+
+.button{display:inline-block;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#ffffff;border:none; padding:.85rem 1.1rem;border-radius:10px;font-weight:700;letter-spacing:.2px;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.25); position:relative;overflow:hidden;transition:transform .16s ease, box-shadow .2s ease, filter .2s ease; text-align: center;}
+.button:hover{transform:translateY(-1px);box-shadow:0 10px 28px rgba(0,0,0,.30)}
+.button:active{transform:translateY(1px);filter:saturate(1.1)}
+.button.ghost{background:transparent;border:2px solid var(--brand);color:var(--ink); box-shadow: none;}
+.button.small{padding:.55rem .85rem;border-radius:8px;font-weight:600}
+.button:focus-visible{outline:3px solid rgba(47,109,58,.35);outline-offset:2px;border-radius:12px}
+@media (max-width: 600px) { .button { width: 100%; margin-bottom: 8px; } }
+
+/* Ripple Effect */
+.button .ripple{position:absolute;border-radius:999px;transform:scale(0);opacity:.45;pointer-events:none;mix-blend-mode:overlay;background:#fff; animation:ripple .6s ease-out forwards} 
+@keyframes ripple{to{transform:scale(8);opacity:0}}
+
+/* Header */
+.header{position:sticky;top:0;z-index:50;background:rgba(247, 243, 234, 0.85);backdrop-filter:saturate(160%) blur(12px);border-bottom:1px solid var(--line);transition:box-shadow .25s ease}
+.header.scrolled{box-shadow:0 8px 20px rgba(0,0,0,.08)}
+.header .wrap{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+.logo-bar{ display:flex; align-items:center; gap:6px; }
+
+/* Logos */
+.logo{ position:relative; display:inline-block; } .logo img{ height:36px; display:block; } 
+.logo img.logo-green{ position:absolute; left:0; top:0; opacity:0; transform:translateY(2px) scale(.98); transition:opacity .2s ease, transform .2s ease; will-change:opacity, transform; } 
+.logo img.logo-blue{ transition:opacity .2s ease, transform .2s ease; } 
+.logo:hover img.logo-green{ opacity:1; transform:none; } .logo:hover img.logo-blue{ opacity:0; transform:translateY(-2px) scale(1.02); }
+
+.logo2{ position:relative; display:inline-block; } .logo2 img{ height:22px; display:block; } 
+.logo2 img.logo-red{ position:absolute; left:0; top:0; opacity:0; transform:translateY(2px) scale(.98); transition:opacity .2s ease, transform .2s ease; will-change:opacity, transform; } 
+.logo2 img.logo-yellow{ transition:opacity .2s ease, transform .2s ease; } 
+.logo2:hover img.logo-red{ opacity:1; transform:none; } .logo2:hover img.logo-yellow{ opacity:0; transform:translateY(-2px) scale(1.02); }
+
+/* Navigation */
+.nav{display:flex;align-items:center;gap:10px}
+.nav a{padding:8px 10px;border-radius:8px;color:var(--muted);position:relative;font-size: 15px;}
+.nav a:hover{color:var(--ink);background:rgba(0,0,0,.04)}
+.nav a.active{color:#fff;background:linear-gradient(135deg,var(--brand),var(--brand2))}
+
+/* Mobile Nav */
+.mobile-toggle{display:none;border:1px solid var(--line);border-radius:10px;padding:10px;cursor:pointer;transition:transform .15s ease; background: transparent;}
+.mobile-toggle span{display:block;width:24px;height:2px;background:var(--ink);margin:5px 0; transition: 0.3s;}
+.mobile-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.mobile-toggle.open span:nth-child(2) { opacity: 0; }
+.mobile-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+@media (max-width:900px){.nav{display:none}.mobile-toggle{display:block}}
+.mobile-menu{display:none;position:fixed;inset:65px 12px auto 12px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px;z-index:60;box-shadow:0 18px 40px rgba(0,0,0,.18); transform-origin: top center; animation: slideDown 0.2s ease-out;}
+.mobile-menu.show{display:block}
+.mobile-menu a{display:block;padding:14px;border-radius:10px;transition:background .18s ease; font-weight: 500; border-bottom: 1px solid rgba(0,0,0,0.03);}
+.mobile-menu a:last-child { border-bottom: none; }
+.mobile-menu a:hover{background:rgba(0,0,0,.06)}
+@keyframes slideDown { from { opacity: 0; transform: scale(0.95) translateY(-10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+
+/* Hero */
+.hero{position:relative}
+.slider{position:relative;overflow:hidden;border-radius:16px}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity .8s ease}
+.slide.active{opacity:1}
+.slide img{width:100%;height:60vh;object-fit:cover;filter:saturate(1.02)}
+@media (max-width: 900px) { .slide img { height: 50vh; } }
+.slider .dots{position:absolute;bottom:14px;left:0;right:0;display:flex;gap:8px;justify-content:center; z-index: 10;}
+.dot{width:10px;height:10px;border-radius:999px;background:rgba(255,255,255,.5);cursor:pointer;transition:transform .16s ease, background .16s ease; backdrop-filter: blur(4px);}
+.dot.active{background:var(--brand); transform: scale(1.2);}
+.slider .arrows{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 10px; pointer-events: none;}
+.arrow{width:44px;height:44px;border-radius:999px;background:rgba(0,0,0,.35);display:grid;place-items:center;color:#fff;cursor:pointer;user-select:auto;pointer-events: all; transition:transform .15s ease, background .2s ease}
+.hero-ctas{position:absolute;inset:auto 0 30px 0;display:flex; flex-wrap: wrap; justify-content: center; gap: 12px; width: 90%; margin: 0 auto;}
+
+/* Listings Carousel (Scroll Snap) */
+.carousel{position:relative}
+.carousel-track{display:flex;gap:18px;overflow-x:auto;scroll-behavior:smooth; scroll-snap-type: x mandatory; padding-bottom: 20px; -webkit-overflow-scrolling: touch;}
+.carousel-track::-webkit-scrollbar { display: none; }
+.card{min-width:280px; flex: 0 0 auto; scroll-snap-align: center; background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:transform .18s ease;will-change:transform}
+.card .bg img{height:180px;width:100%;object-fit:cover;}
+.card .meta{padding:16px}
+.carousel .c-arrow{position:absolute;top:40%;transform:translateY(-50%);width:42px;height:42px;border-radius:999px;background:rgba(255,255,255,.9); box-shadow: 0 4px 12px rgba(0,0,0,0.15); display:grid;place-items:center;cursor:pointer;z-index: 2;}
+.carousel .prev{left:10px}
+.carousel .next{right:10px}
+@media (max-width: 768px) { .carousel .c-arrow { display: none; } }
+
+/* Features */
+.feature{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center}
+.feature .pic{border-radius:16px;overflow:hidden;border:1px solid var(--line)}
+.feature .pic img{height:340px;width:100%;object-fit:cover;}
+@media (max-width:900px){.feature{grid-template-columns:1fr; gap: 24px;}}
+
+/* FAQ */
+.faq-item{border:1px solid var(--line);border-radius:12px;margin:10px 0;overflow:hidden;transition:box-shadow .2s ease}
+.faq-q{padding:16px;background:rgba(0,0,0,.03);cursor:pointer;font-weight: 600; display: flex; justify-content: space-between; align-items: center;}
+.faq-q::after { content: '+'; font-weight: 400; font-size: 20px; }
+.faq-item.open .faq-q::after { content: '-'; }
+.faq-a{padding:16px;display:none; border-top: 1px solid var(--line); line-height: 1.6;}
+.faq-item.open .faq-a{display:block}
+
+/* Form */
+.form-row{display:flex;gap:10px;flex-wrap:wrap; margin-bottom: 10px;}
+@media (max-width: 600px) { .form-row { flex-direction: column; gap: 12px; } }
+.form-row input, .form-row select, .form-row textarea{flex:1;min-width:160px;background:#ffffff;border:1px solid var(--line);color:#1f2a1f;border-radius:10px;padding:14px; font-size: 16px; }
+.form-row textarea { width: 100%; resize: vertical; min-height: 100px; }
+.form-row input:focus, .form-row textarea:focus { outline: 2px solid var(--brand2); border-color: transparent; }
+
+/* Modal */
+.modal{position:fixed;inset:0;display:none;place-items:center;z-index:100}
+.modal.show{display:grid}
+.modal .backdrop{position:absolute;inset:0;background:rgba(0,0,0,.6); backdrop-filter: blur(4px);}
+.modal .sheet{position:relative;background:#ffffff;border:1px solid var(--line);border-radius:16px;max-width:600px;width:92%;padding:24px;box-shadow:0 24px 60px rgba(0,0,0,.25); animation: modalPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);}
+@keyframes modalPop { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.modal .close{position:absolute;top:16px;right:16px;cursor:pointer;font-size:24px;color:var(--muted); padding: 4px;}
+
+/* Footer */
+.footer{background: var(--ink); color: #fff; padding: 40px 20px; margin-top: 60px; text-align: center; border-top: none;}
+.footer a { color: rgba(255,255,255,0.7); transition: color 0.2s; margin: 0 10px; display: inline-block;}
+.footer a:hover { color: #fff; }
+.footer .subtle { color: rgba(255,255,255,0.4); font-size: 14px; margin-top: 20px; }
+
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="container wrap">
+    <div class="logo-bar">
+      <a href="#top" class="logo" aria-label="Home">
+        <img src="https://raw.githubusercontent.com/cruiserein22/reg/main/logo1.png"  class="logo-blue"  alt="">
+        <img src="https://raw.githubusercontent.com/cruiserein22/reg/main/logo_2.png" class="logo-green" alt="">
+      </a>
+      <a href="#top" class="logo2" aria-label="Home">
+        <img src="https://raw.githubusercontent.com/cruiserein22/reg/main/logo22.png" class="logo-red"    alt="">
+        <img src="https://raw.githubusercontent.com/cruiserein22/reg/main/logo11.png" class="logo-yellow" alt="">
+      </a>
+    </div>
+    <nav class="nav" aria-label="Primary" id="desktopNav">
+      <a href="#listings">Listings</a>
+      <a href="#buy">Buy</a>
+      <a href="#sell">Sell</a>
+      <a href="#rent">Rent</a>
+      <a href="#locations">Locations</a>
+      <a href="#about">About</a>
+      <a href="#faq">FAQs</a>
+      <a class="button small" href="#contact">Contact</a>
+    </nav>
+    <button class="mobile-toggle" id="mobileToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+  
+  <nav class="mobile-menu" id="mobileMenu">
+    <a href="#listings">Listings</a>
+    <a href="#buy">Buy</a>
+    <a href="#sell">Sell</a>
+    <a href="#rent">Rent</a>
+    <a href="#locations">Locations</a>
+    <a href="#about">About</a>
+    <a href="#faq">FAQs</a>
+    <a href="#contact" class="button" style="margin-top:12px; color: white;">Contact Us</a>
+  </nav>
+</header>
+
+<main id="top">
+  
+  <!-- HERO -->
+  <section class="section hero container" style="padding-top: 20px;" id="home">
+    <div class="slider" id="heroSlider">
+      <div class="slide active"><img src="https://images.unsplash.com/photo-1560185008-b033106af5c3?auto=format&fit=crop&w=1600&q=80" alt="Country Estate"></div>
+      <div class="slide"><img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1600&q=80" alt="Luxury Rural Living"></div>
+      <div class="slide"><img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1600&q=80" alt="Aerial Farmland"></div>
+      <div class="slide"><img src="https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=1600&q=80" alt="Classic Homestead"></div>
+      <div class="arrows"><div class="arrow prev">&#10094;</div><div class="arrow next">&#10095;</div></div>
+      <div class="dots" id="heroDots"></div>
+    </div>
+    <div class="hero-ctas">
+      <a class="button" href="#listings">Browse Listings</a>
+      <a class="button ghost" href="#appraisal" id="openAppraisalHero">What's My Property Worth?</a>
+    </div>
+  </section>
+
+  <!-- LISTINGS -->
+  <section class="section" id="listings">
+    <div class="container">
+      <h2 style="margin:0 0 6px">Featured Listings</h2>
+      <div class="subtle">Static previews — enquire for full details.</div>
+      <div class="hr"></div>
+      <div class="carousel" id="listingsCarousel">
+        <div class="c-arrow prev" aria-label="Previous">&#10094;</div>
+        <div class="carousel-track" id="listingsTrack">
+          <article class="card">
+            <a href="#contact"><div class="bg"><img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=800&q=80" alt="137/538 Hunter Street"></div>
+            <div class="meta"><div class="badge">Bundaberg</div><h3 style="margin:8px 0 6px">137/538 Hunter Street</h3>
+            <div class="subtle">Beds 2 • Bath 1 • Car 1</div><div class="price" style="margin-top:8px">$530,000 - $560,000</div></div></a>
+          </article>
+          <article class="card">
+            <a href="#contact"><div class="bg"><img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=800&q=80" alt="137/538 Hunter Street"></div>
+            <div class="meta"><div class="badge">Bundaberg</div><h3 style="margin:8px 0 6px">137/538 Hunter Street</h3>
+            <div class="subtle">Beds 2 • Bath 1 • Car 1</div><div class="price" style="margin-top:8px">$530,000 - $560,000</div></div></a>
+          </article>
+          <article class="card">
+            <a href="#contact"><div class="bg"><img src="https://images.unsplash.com/photo-1600596542815-27838eb76698?auto=format&fit=crop&w=800&q=80" alt="201/585 Water Street"></div>
+            <div class="meta"><div class="badge">Bundaberg</div><h3 style="margin:8px 0 6px">201/585 Water Street</h3>
+            <div class="subtle">Beds 1 • Bath 1 • Car 1</div><div class="price" style="margin-top:8px">$360,000 - $390,000</div></div></a>
+          </article>
+          <article class="card">
+            <a href="#contact"><div class="bg"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80" alt="405/20 Burnett Road, Doncaster"></div>
+            <div class="meta"><div class="badge">Doncaster</div><h3 style="margin:8px 0 6px">405/20 Burnett Road</h3>
+            <div class="subtle">Beds 2 • Bath 2 • Car 1</div><div class="price" style="margin-top:8px">$580,000 - $620,000</div></div></a>
+          </article>
+          <article class="card">
+            <a href="#contact"><div class="bg"><img src="https://images.unsplash.com/photo-1605146769289-440113cc3d00?auto=format&fit=crop&w=800&q=80" alt="12/18-20 Woondooma Crescent, Hampton"></div>
+            <div class="meta"><div class="badge">Hampton</div><h3 style="margin:8px 0 6px">12/18-20 Woondooma Crescent</h3>
+            <div class="subtle">Beds 2 • Bath 1 • Car 1</div><div class="price" style="margin-top:8px">$720,000 - $770,000</div></div></a>
+          </article>
+        </div>
+        <div class="c-arrow next" aria-label="Next">&#10095;</div>
+      </div>
+      <div style="text-align:center;margin-top:24px"><a class="button" href="#contact">Enquire About Available Properties</a></div>
+    </div>
+  </section>
+
+  <!-- BUY -->
+  <section class="section" id="buy">
+    <div class="container feature">
+      <!-- FIXED: Added onerror to fallback to Unsplash if GitHub link breaks -->
+      <div class="pic"><img src="https://raw.githubusercontent.com/cruiserein22/reg/main/shutterstock_50097079-2ec9cc.jpg" onerror="this.src='https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&w=800&q=80'" alt="Buy With Us"></div>
+      <div class="text">
+        <h3>Buy With Us</h3>
+        <p>Shortlist. Inspect. Offer. Settle. We guide the steps and negotiate hard in your favour.</p>
+        <div style="margin-top:10px"><a class="button" href="#contact">Tell Us What You Want</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SELL -->
+  <section class="section" id="sell">
+    <div class="container feature">
+      <div class="pic"><img src="https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?auto=format&fit=crop&w=800&q=80" alt="Sell With Us"></div>
+      <div class="text">
+        <h3>Sell With Confidence</h3>
+        <p>Campaigns built to maximise price and minimise time on market. Transparent advice. No fluff.</p>
+        <div style="margin-top:10px"><a class="button" href="#appraisal" id="openAppraisalSell">Request Appraisal</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RENT -->
+  <section class="section" id="rent">
+    <div class="container feature">
+      <div class="pic"><img src="https://images.unsplash.com/photo-1484156818094-802291369072?auto=format&fit=crop&w=800&q=80" alt="Rent With Us"></div>
+      <div class="text">
+        <h3>Rent With Us</h3>
+        <p>Good properties, fair screening, fast responses. Register your interest below.</p>
+        <div style="margin-top:10px"><a class="button" href="#contact">Register Interest</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOCATIONS (Come On Down) -->
+  <section class="section" id="locations">
+    <div class="container feature">
+      <!-- FIXED: Added onerror fallback -->
+      <div class="pic"><img src="https://raw.githubusercontent.com/cruiserein22/reg/main/web_sml-4ee24fa4ad9acc5ce8d5.jpg" onerror="this.src='https://images.unsplash.com/photo-1500076656116-558758c991c1?auto=format&fit=crop&w=800&q=80'" alt="Our Offices"></div>
+      <div class="text">
+        <h3>Come On Down</h3>
+        <p>Whether you’re buying, selling, or just exploring your next move — we’d love to meet you in person. Stop by one of our welcoming storefronts and have a chat with the team that knows the region inside out.</p>
+        <p><strong>Monto Branch</strong><br/>Newton St, Monto QLD 4630</p>
+        <p><strong>Head Office (Bundaberg)</strong><br/>Bourbong St, Bundaberg West QLD 4670</p>
+        <div style="margin-top:10px"><a class="button" href="#contact">Plan Your Visit</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <div class="container feature">
+      <!-- FIXED: Added onerror fallback -->
+      <div class="pic"><img src="https://raw.githubusercontent.com/cruiserein22/reg/main/pic_we-will-sell-your-property....png" onerror="this.src='https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80'" alt="About"></div>
+      <div class="text">
+        <h3>About Us</h3>
+        <p>Local. Focused. Relentless. We combine sharp marketing with no-nonsense negotiation to deliver results that stand up to scrutiny.</p>
+        <div style="margin-top:10px"><a class="button ghost" href="#contact">Meet The Team</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPRAISAL CTA -->
+  <section class="section" id="appraisal">
+    <div class="container" style="text-align:center">
+      <h3 style="margin:0 0 8px">Instant Appraisal</h3>
+      <p class="subtle">Find out what your property is worth.</p>
+      <div style="margin-top:10px"><button class="button" id="openAppraisal">Open Quick Appraisal</button></div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" id="faq">
+    <div class="container">
+      <h3 style="margin:0 0 12px">FAQs</h3>
+      <div class="subtle">Quick answers to common questions.</div>
+      <div class="hr"></div>
+      <div class="faq-item">
+        <div class="faq-q">How fast can I get an appraisal?</div>
+        <div class="faq-a">Same day in most cases. Use the “Open Quick Appraisal” button and we’ll confirm a time.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Do you handle rentals and sales?</div>
+        <div class="faq-a">Yes. Dedicated teams for sales and property management under one roof.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Can I view off-market opportunities?</div>
+        <div class="faq-a">Register your brief in the Contact section; we’ll send pre-market and agent-only listings.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section" id="contact">
+    <div class="container">
+      <h3 style="margin:0 0 8px">Contact</h3>
+      <p class="subtle">Prefer call-back or email? Tell us what you need—buying, selling, or renting—and we’ll move.</p>
+      
+      <form id="contactForm" autocomplete="on" style="margin-top:14px" onsubmit="event.preventDefault(); alert('Thank you. We will contact you shortly.');">
+        <div class="form-row">
+          <input name="name" placeholder="Full Name" required>
+          <input name="phone" placeholder="0400 000 000" pattern="[0-9 ]{8,16}">
+        </div>
+        <div class="form-row">
+          <input type="email" name="email" placeholder="Email Address" required>
+           <select name="interest">
+             <option value="" disabled selected>I am interested in...</option>
+             <option value="buying">Buying Property</option>
+             <option value="selling">Selling Property</option>
+             <option value="renting">Renting</option>
+             <option value="other">Other Enquiry</option>
+           </select>
+        </div>
+        <div class="form-row">
+          <textarea name="message" placeholder="How can we help you today?"></textarea>
+        </div>
+        <div style="margin-top:12px;">
+          <button type="submit" class="button">Dispatch Enquiry</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div style="margin-bottom: 15px;">
+      <a href="#home">Home</a>
+      <a href="#listings">Listings</a>
+      <a href="#sell">Sell</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="subtle">
+      &copy; 2025 reGalaxy Real Estate. Built for performance.
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL OVERLAY -->
+<div class="modal" id="appraisalModal">
+  <div class="backdrop"></div>
+  <div class="sheet">
+    <div class="close" id="closeAppraisal">&times;</div>
+    <h3 style="margin-bottom:4px;">Property Appraisal</h3>
+    <p class="subtle" style="margin-bottom:16px;">Enter your property details for a fast market estimate.</p>
+    <form onsubmit="event.preventDefault(); document.getElementById('closeAppraisal').click(); alert('Request received.');">
+      <div class="form-row">
+        <input placeholder="Property Address" required>
+      </div>
+      <div class="form-row">
+        <input placeholder="Your Name" required>
+        <input placeholder="Mobile Number" required>
+      </div>
+      <div class="form-row">
+         <button type="submit" class="button" style="width:100%;">Request Report</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+// Ripple Effect
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('button')) {
+    let rect = e.target.getBoundingClientRect();
+    let ripple = document.createElement('span');
+    ripple.className = 'ripple';
+    ripple.style.left = (e.clientX - rect.left - 10) + 'px';
+    ripple.style.top = (e.clientY - rect.top - 10) + 'px';
+    e.target.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 600);
+  }
+});
+
+// Mobile Menu
+const toggle = document.getElementById('mobileToggle');
+const menu = document.getElementById('mobileMenu');
+const header = document.querySelector('.header');
+
+toggle.addEventListener('click', () => {
+  const isVisible = menu.style.display === 'block';
+  menu.style.display = isVisible ? 'none' : 'block';
+  toggle.classList.toggle('open');
+});
+
+// Close mobile menu on link click
+menu.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    menu.style.display = 'none';
+    toggle.classList.remove('open');
+  });
+});
+
+// Sticky Header Shadow
+window.addEventListener('scroll', () => {
+  header.classList.toggle('scrolled', window.scrollY > 20);
+});
+
+// Hero Slider
+const slides = document.querySelectorAll('.slide');
+const dotsContainer = document.getElementById('heroDots');
+let currentSlide = 0;
+
+// Create dots
+slides.forEach((_, i) => {
+  let dot = document.createElement('div');
+  dot.classList.add('dot');
+  if (i === 0) dot.classList.add('active');
+  dot.addEventListener('click', () => goToSlide(i));
+  dotsContainer.appendChild(dot);
+});
+const dots = document.querySelectorAll('.dot');
+
+function goToSlide(n) {
+  slides[currentSlide].classList.remove('active');
+  dots[currentSlide].classList.remove('active');
+  currentSlide = (n + slides.length) % slides.length;
+  slides[currentSlide].classList.add('active');
+  dots[currentSlide].classList.add('active');
+}
+
+document.querySelector('.arrow.prev').addEventListener('click', () => goToSlide(currentSlide - 1));
+document.querySelector('.arrow.next').addEventListener('click', () => goToSlide(currentSlide + 1));
+
+// Auto-play slider
+setInterval(() => goToSlide(currentSlide + 1), 5000);
+
+// Listings Carousel Scroll
+const track = document.getElementById('listingsTrack');
+document.querySelector('.c-arrow.next').addEventListener('click', () => track.scrollBy({left: 320, behavior: 'smooth'}));
+document.querySelector('.c-arrow.prev').addEventListener('click', () => track.scrollBy({left: -320, behavior: 'smooth'}));
+
+// FAQ Accordion
+document.querySelectorAll('.faq-q').forEach(q => {
+  q.addEventListener('click', () => {
+    const item = q.parentElement;
+    item.classList.toggle('open');
+  });
+});
+
+// Appraisal Modal
+const modal = document.getElementById('appraisalModal');
+const openBtns = ['openAppraisal', 'openAppraisalHero', 'openAppraisalSell'];
+openBtns.forEach(id => {
+  const btn = document.getElementById(id);
+  if(btn) btn.addEventListener('click', () => modal.classList.add('show'));
+});
+
+document.getElementById('closeAppraisal').addEventListener('click', () => modal.classList.remove('show'));
+document.querySelector('.backdrop').addEventListener('click', () => modal.classList.remove('show'));
+
+</script>
+</body>
+</html>
